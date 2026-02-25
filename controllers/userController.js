@@ -1,7 +1,12 @@
 /* 'controllers folder' contains different files. 
-    each file is a function.
-    when a route is called by Client,
-    one of this controller function gets executed based on the 'client request path'.
+    these files contain 'functions' that handle 'client requests' and execute business logic for different routes.
+    when a route is called by Client, the corresponding controller function gets executed based on the 'client request path'.
+    i.e, Client -> Route -> Controller Function -> Database -> Response
+
+    *** MVC Architecture ***
+    Routes decide which function to call.
+    Controllers contain the logic.
+    Models talk to the database.
 */
 
 import bcrypt from "bcrypt"; // 'bcrypt' library for 'Hashing the Passwords'.
@@ -14,9 +19,11 @@ const generateToken = (userId) => {
   return jwt.sign(payload, process.env.JWT_SECRET_KEY);
 };
 
-// 'User Controller'
+// 'User Controller' file
 
 // Register User
+/* a controller function that handles 'new user registration'.
+   i.e, validates user input(email,password), create a new user in db, return JWT token */
 const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -45,5 +52,7 @@ const registerUser = async (req, res) => {
     return res.json({ success: false, message: error.message });
   }
 };
+
+//
 
 export { registerUser };
