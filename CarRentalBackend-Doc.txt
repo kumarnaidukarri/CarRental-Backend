@@ -3,3 +3,7 @@ tools :-
     Node.js, Express.js, Mongodb, mongoose 
     cors, dotenv, jsonwebtoken, bcrypt
     nodemon
+
+MVC Architecture:
+Model View Control
+model db, server path, controller function

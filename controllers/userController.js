@@ -53,6 +53,28 @@ const registerUser = async (req, res) => {
   }
 };
 
-//
+// Login User
+/* a controller function that handles 'user login'. */
+const loginUser = async (req, res) => {
+  try {
+    const { email, password } = req.body;
 
-export { registerUser };
+    const user = await UserModel.findOne({ email }); // check user exist in db or not.
+    if (!user) {
+      return res.json({ success: false, message: "User not found !!!" });
+    }
+
+    const isPasswordMatch = await bcrypt.compare(password, user.password); // user password === hashed password from db
+    if (!isPasswordMatch) {
+      return res.json({ success: false, message: "Invalid Credentials !!!" });
+    }
+
+    const token = generateToken(user._id.toString()); // JWT token
+    return res.json({ success: true, token });
+  } catch (error) {
+    console.log(error.message);
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+export { registerUser, loginUser };
