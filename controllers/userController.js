@@ -5,9 +5,18 @@
 */
 
 import bcrypt from "bcrypt"; // 'bcrypt' library for 'Hashing the Passwords'.
+import jwt from "jsonwebtoken"; // 'jwt' library to 'create jwt tokens'
 import UserModel from "../models/User.js"; // mongodb model
 
+// Generate JWT Token
+const generateToken = (userId) => {
+  const payload = userId;
+  return jwt.sign(payload, process.env.JWT_SECRET_KEY);
+};
+
 // 'User Controller'
+
+// Register User
 const registerUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -28,8 +37,12 @@ const registerUser = async (req, res) => {
       email,
       password: hashedPassword,
     }); // Creates a new user data and stores into Database.
+
+    const token = generateToken(user._id.toString()); // jwt token
+    res.json({ success: true, token });
   } catch (error) {
-    console.log(error);
+    console.log(error.message);
+    return res.json({ success: false, message: error.message });
   }
 };
 
