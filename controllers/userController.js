@@ -4,6 +4,7 @@
     one of this controller function gets executed based on the 'client request path'.
 */
 
+import bcrypt from "bcrypt"; // 'bcrypt' library for 'Hashing the Passwords'.
 import UserModel from "../models/User.js"; // mongodb model
 
 // 'User Controller'
@@ -20,7 +21,16 @@ const registerUser = async (req, res) => {
       // user already register the account
       return res.json({ success: false, message: "User already exists !" });
     }
+
+    const hashedPassword = await bcrypt.hash(password, 10); // Hashing the Password. method: bcrypt.hash(password,saltRounds)
+    const user = await UserModel.create({
+      name,
+      email,
+      password: hashedPassword,
+    }); // Creates a new user data and stores into Database.
   } catch (error) {
     console.log(error);
   }
 };
+
+export { registerUser };
