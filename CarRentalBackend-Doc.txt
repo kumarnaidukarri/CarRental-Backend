@@ -4,6 +4,11 @@ tools :-
     cors, dotenv, jsonwebtoken, bcrypt
     nodemon
 
+    "Multer": 
+      a npm package used to handle 'file uploads'.
+      it features - storage mechanism to store uploaded files in server. 
+
+
 MVC Architecture:
 Model View Control
 model db, server path, controller function
