@@ -7,3 +7,19 @@ tools :-
 MVC Architecture:
 Model View Control
 model db, server path, controller function
+
+
+// Routes :-
+1) User Router
+   http://localhost:5000/api/user
+   post:  http://localhost:5000/api/user/register
+          body: {"name":"Kumar", "email":"example@gmail.com", "password":"example@123"}  
+   post:  /login
+          body: {"email": "example@gmail.com", "password":"example@123"}
+   get:   /userdata
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"} 
+
+2) Owner Router
+   http://localhost:5000/api/owner
+   post: "http://localhost:5000/api/owner/change-role" 
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}          

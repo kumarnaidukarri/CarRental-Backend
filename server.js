@@ -3,6 +3,7 @@ import "dotenv/config"; // 'dotenv' library config allows to access 'ENV' variab
 import cors from "cors";
 import connectDB from "./configs/db.js";
 import userRouter from "./routes/userRouter.js";
+import ownerRouter from "./routes/ownerRouter.js";
 
 // Initialize Express app
 const app = express();
@@ -22,6 +23,7 @@ app.get("/", (req, res) => {
   res.send("Hello There");
 });
 app.use("/api/user", userRouter);
+app.use("/api/owner", ownerRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
