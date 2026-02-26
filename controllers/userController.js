@@ -20,7 +20,6 @@ const generateToken = (userId) => {
 };
 
 // 'User Controller' file
-
 // Register User
 /* a controller function that handles 'new user registration'.
    i.e, validates user input(email,password), create a new user in db, return JWT token */
@@ -73,6 +72,18 @@ const loginUser = async (req, res) => {
     return res.json({ success: true, token });
   } catch (error) {
     console.log(error.message);
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+// Get User data
+/* a controller function returns user data using JWT Token */
+const getUserDataFromToken = async (req, res) => {
+  try {
+    const { user } = req;
+    res.json({ success: true, user: user });
+  } catch (error) {
+    console.log(error);
     return res.json({ success: false, message: error.message });
   }
 };
