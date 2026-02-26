@@ -88,4 +88,4 @@ const getUserDataFromToken = async (req, res) => {
   }
 };
 
-export { registerUser, loginUser };
+export { registerUser, loginUser, getUserDataFromToken };
