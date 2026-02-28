@@ -8,6 +8,7 @@ import {
   addCar,
   changeRoleToOwner,
   getOwnerCars,
+  toggleCarAvailability,
 } from "../controllers/ownerController.js"; // controller functions
 
 const ownerRouter = express.Router();
@@ -26,5 +27,11 @@ ownerRouter.post(
 ); // (Path, verifyJWT Middleware, upload Middleware, Controller function)
 
 ownerRouter.get("/cars", protectRoute_VerifyJwtToken, getOwnerCars);
+
+ownerRouter.post(
+  "/toggle-car-availability",
+  protectRoute_VerifyJwtToken,
+  toggleCarAvailability,
+);
 
 export default ownerRouter;

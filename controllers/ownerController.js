@@ -78,4 +78,32 @@ const getOwnerCars = async (req, res) => {
   }
 };
 
-export { changeRoleToOwner, addCar, getOwnerCars };
+// controller function - API to Toggle the "Car Availability"
+const toggleCarAvailability = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { carId } = req.body;
+
+    const car = await CarModel.findById(carId); // Find Query
+
+    // Checking - is Car belongs to the login User
+    if (car.owner.toString() !== userId.toString()) {
+      return res.json({ success: false, message: "Unauthorized" });
+    }
+
+    // Update it in DB
+    car.isAvailable = !car.isAvailable; // only updates in Nodejs Memory(RAM)
+    await car.save(); // detects the change in object and updates the document in Database
+
+    res.json({
+      success: true,
+      message: "Availability Toggled Successfully !!!",
+      car,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export { changeRoleToOwner, addCar, getOwnerCars, toggleCarAvailability };

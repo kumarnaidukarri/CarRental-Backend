@@ -40,6 +40,9 @@ model db, server path, controller function
              carData : {'brand':'Audi','model':'A8','year':'2026'}, 
              image : 'please upload a file'
           }
-   get:  /cars  
+   get:   /cars  
           header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"} 
+   post:  /toggle-car-availability
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"} 
+          body: {carId:'41ef422'}      
           
