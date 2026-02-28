@@ -31,7 +31,7 @@ const addCar = async (req, res) => {
     const imageFileInfo = req.file; // Access the Stored file information
     // console.log("FILE:", imageFileInfo);
 
-    // * Send Upload the Image file into "ImageKit.io" Cloud Server
+    // * 1) Send Upload the Image file from BackendServer into "ImageKit.io" Cloud Server
     /* Convert 'Buffer' into proper 'File Object'.   
        then parameters,  file:"uploading_file_object", fileName:"uploading_file_name", folder:"optional folder_name in Imagekit cloudserver"  */
     const fileObject = await toFile(
@@ -47,10 +47,18 @@ const addCar = async (req, res) => {
       uploadedImageResponse,
     ); /* {fileId:'69a2', name:'car1_uTdn.png', size:950862, filePath:'/cars/car1...', url:'https://ik...', fileType:'image', height:853, width:1280} */
 
+    // * 2) Save the 'New Car' in Database.
+    const imageCdnUrl = uploadedImageResponse.url;
+    const response = await CarModel.create({
+      ...carData,
+      owner: _id,
+      image: imageCdnUrl,
+    }); // create a new car document
+
     res.send({
       success: true,
       message: "Car Added Successfully !!!",
-      data: uploadedImageResponse,
+      data: response,
     });
   } catch (error) {
     console.log(error.message);
