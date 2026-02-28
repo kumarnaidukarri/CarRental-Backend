@@ -1,11 +1,14 @@
 import multer from "multer";
 
+/* Multer middleware stores the file in 'Local Server disk' storage. */
+// const diskStorage = multer.diskStorage({destination: (req, file, cb) => cb(null, "uploads/"), filename: (req, file, cb) => cb(null, file.originalname)});
+
+/* Multer middleware stores the file in 'RAM buffer memory' storage. */
+const ramBufferStorage = multer.memoryStorage(); // stores in RAM
+
 const uploadMiddleware = multer({
-  storage: multer.diskStorage({
-    destination: (req, file, cb) => cb(null, "uploads/"),
-    filename: (req, file, cb) => cb(null, file.originalname),
-  }),
-}); // Multer middleware saves the file in 'Local Server disk' storage.
+  storage: ramBufferStorage,
+});
 
 export default uploadMiddleware;
 
@@ -45,15 +48,15 @@ File Uploads working:
        then, save the file reference path in database.
        if server crashes, file is lost. 
        ex: multer.diskStorage();
-           req.file.path; // access file
+           req.file; // access the file.  {fieldName:'image', originalName:'car_1.png', destination:'uploads/', fileName:'car_1.png', path:'uploads/car_1.png', 'size':520897}
    2) Temporary Buffer Memory(RAM) + Cloud Storage(production):
        file stored in RAM buffer memory temporary.
        then, we upload it to 'cloud service provider' like Image kit, Aws S3.  
-       ex: multer.memoryStorage(); // stores file in Ram
-           req.file.buffer;      // access to file 
-      we send file to cloud service providers using SDKs. like 'Cloudinary', 'Amazon S3'.
-      they store the file and returns a URL. 
-      then, URL reference is stored in our MongoDB best practice.    
+       ex: multer.memoryStorage(); // stores file in RAM
+           req.file;               // access the file.  {fieldname:'image',originalname: 'car_3.png', buffer:<Buffer 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 0>, size:192897} 
+       we send file to cloud service providers using SDKs. like 'Cloudinary', 'Amazon S3'.
+       they store the file and returns a URL. 
+       then, URL reference is stored in our MongoDB best practice.    
 note:
   sanitize the upload file by Limit file size, Validate file type, Protect route with JWT, Sanitize file names.  
   *** Mongodb can't store the files. only, it stores Text data, Numbers, References, File URLs.   

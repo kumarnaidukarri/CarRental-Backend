@@ -17,7 +17,7 @@ ownerRouter.post(
 ownerRouter.post(
   "/add-car",
   protectRoute_VerifyJwtToken,
-  uploadMiddleware.single("image"),
+  uploadMiddleware.single("image"), // keyName is 'image' and keyValue is 'uploaded file car1.jpg' coming from API Call "Form-Data".
   addCar,
 ); // (Path, verifyJWT Middleware, upload Middleware, Controller function)
 
