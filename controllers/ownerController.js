@@ -106,4 +106,43 @@ const toggleCarAvailability = async (req, res) => {
   }
 };
 
-export { changeRoleToOwner, addCar, getOwnerCars, toggleCarAvailability };
+// controller function - API to "Delete a Car"
+const deleteCar = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const { carId } = req.body;
+
+    const car = await CarModel.findById(carId); // Find Query
+
+    // Checking - is Car belongs to the login User
+    if (car.owner.toString() !== userId.toString()) {
+      return res.json({ success: false, message: "Unauthorized" });
+    }
+
+    // Update it in Database
+    /* Don't Delete the Car Document. 
+       because, Someone may already booked this car and showed in UI.  * Deleting it - breaksUI, reports break, past history breaks. 
+       so, keep the car record, mark it as inactive, prevent new bookings.
+    */
+    car.owner = null;
+    car.isAvailable = false; // only updates in Nodejs Memory(RAM)
+    await car.save(); // detects the change in object and updates the document in Database
+
+    res.json({
+      success: true,
+      message: "Car Removed Successfully !!!",
+      car,
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export {
+  changeRoleToOwner,
+  addCar,
+  getOwnerCars,
+  toggleCarAvailability,
+  deleteCar,
+};

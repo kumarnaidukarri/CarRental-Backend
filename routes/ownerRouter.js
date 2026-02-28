@@ -5,10 +5,11 @@ import { protectRoute_VerifyJwtToken } from "../middleware/auth.js"; // middlewa
 import uploadMiddleware from "../middleware/multer.js"; // multer middleware function for uploads
 
 import {
-  addCar,
   changeRoleToOwner,
+  addCar,
   getOwnerCars,
   toggleCarAvailability,
+  deleteCar,
 } from "../controllers/ownerController.js"; // controller functions
 
 const ownerRouter = express.Router();
@@ -33,5 +34,7 @@ ownerRouter.post(
   protectRoute_VerifyJwtToken,
   toggleCarAvailability,
 );
+
+ownerRouter.post("/delete-car", protectRoute_VerifyJwtToken, deleteCar);
 
 export default ownerRouter;

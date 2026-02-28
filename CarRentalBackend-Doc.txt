@@ -45,4 +45,7 @@ model db, server path, controller function
    post:  /toggle-car-availability
           header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"} 
           body: {carId:'41ef422'}      
+   post:  /delete-car
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"} 
+          body: {carId:'41ef422'}      
           
