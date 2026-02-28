@@ -6,7 +6,9 @@ tools :-
 
     "Multer": 
       a npm package used to handle 'file uploads'.
-      it features - storage mechanism to store uploaded files in server. 
+      it provides a middleware function that will handle 'upload files'.
+      it save inside "uploads" folder in 'Localdisk of our server' (or) 'Ram buffer memory'. 
+      later, we can send file to cloud server(imagekit, aws s3). 
 
 
 MVC Architecture:
@@ -28,3 +30,9 @@ model db, server path, controller function
    http://localhost:5000/api/owner
    post: "http://localhost:5000/api/owner/change-role" 
           header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}          
+   post:  /add-car 
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}   
+          body form-data: {
+             carData : {'brand':'Audi','model':'A8','year':'2026'}, 
+             image : 'please upload a file'
+          }
