@@ -10,6 +10,10 @@ tools :-
       it save inside "uploads" folder in 'Localdisk of our server' (or) 'Ram buffer memory'. 
       later, we can send file to cloud server(imagekit, aws s3). 
 
+    "@Imagekit/Nodejs": 
+       SDK package used to upload your mentioned files to the "Imagekit Cloud Server".  
+       we can access them using CDNs. 
+        
 
 MVC Architecture:
 Model View Control
