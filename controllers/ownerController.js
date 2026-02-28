@@ -66,4 +66,16 @@ const addCar = async (req, res) => {
   }
 };
 
-export { changeRoleToOwner, addCar };
+// controller function - Get "List of Owner Cars"
+const getOwnerCars = async (req, res) => {
+  try {
+    const userId = req.user._id;
+    const ownerCars = await CarModel.find({ owner: userId }); // Find Query
+    res.json({ success: true, cars: ownerCars });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+
+export { changeRoleToOwner, addCar, getOwnerCars };
