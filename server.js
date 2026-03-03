@@ -4,6 +4,7 @@ import cors from "cors";
 import connectDB from "./configs/db.js";
 import userRouter from "./routes/userRouter.js";
 import ownerRouter from "./routes/ownerRouter.js";
+import bookingRouter from "./routes/bookingRouter.js";
 
 // Initialize Express app
 const app = express();
@@ -24,6 +25,7 @@ app.get("/", (req, res) => {
 });
 app.use("/api/user", userRouter);
 app.use("/api/owner", ownerRouter);
+app.use("/api/bookings", bookingRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

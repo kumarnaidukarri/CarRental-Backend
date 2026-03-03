@@ -150,3 +150,11 @@ const changeBookingStatus = async (req, res) => {
     return res.json({ success: false, message: error.message });
   }
 };
+
+export {
+  checkAvailabilityOfCar,
+  createBooking,
+  getUserBookings,
+  getOwnerBookings,
+  changeBookingStatus,
+};

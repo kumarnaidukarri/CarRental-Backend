@@ -48,4 +48,15 @@ model db, server path, controller function
    post:  /delete-car
           header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"} 
           body: {carId:'41ef422'}      
-          
+
+3) Booking Router 
+   http://localhost:5000/api/bookings
+   post: "http://localhost:5000/api/bookings/check-availability"
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}          
+          body: {location:'', pickupDate:'', returnDate:''}
+   post: bookings/create
+         body:{car:'', pickupDate:'', returnDate:''}
+   get : bookings/user 
+   get : bookings/owner 
+   post: bookings/change-status
+         body:{bookingId:'', status:''}   
