@@ -128,3 +128,25 @@ const getOwnerBookings = async (req, res) => {
     return res.json({ success: false, message: error.message });
   }
 };
+
+// controller function - API to change the booking status
+const changeBookingStatus = async (req, res) => {
+  try {
+    const { _id } = req.user;
+    const { bookingId, status } = req.body;
+
+    const booking = await BookingModel.findById(bookingId);
+    if (booking.owner.toString() !== _id.toString()) {
+      return res.json({ success: false, message: "Unauthorized" });
+    }
+
+    // Update and Save in DB.
+    booking.status = status;
+    await booking.save();
+
+    res.json({ success: true, bookings });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, message: error.message });
+  }
+};
