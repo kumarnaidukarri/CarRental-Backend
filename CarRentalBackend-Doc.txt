@@ -47,7 +47,10 @@ model db, server path, controller function
           body: {carId:'41ef422'}      
    post:  /delete-car
           header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"} 
-          body: {carId:'41ef422'}      
+          body: {carId:'41ef422'}   
+   post:  /dashboard 
+                
+
 
 3) Booking Router 
    http://localhost:5000/api/bookings

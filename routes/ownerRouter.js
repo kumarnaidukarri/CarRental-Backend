@@ -10,6 +10,7 @@ import {
   getOwnerCars,
   toggleCarAvailability,
   deleteCar,
+  getDashboardData,
 } from "../controllers/ownerController.js"; // controller functions
 
 const ownerRouter = express.Router();
@@ -36,5 +37,7 @@ ownerRouter.post(
 );
 
 ownerRouter.post("/delete-car", protectRoute_VerifyJwtToken, deleteCar);
+
+ownerRouter.get("/dashboard", protectRoute_VerifyJwtToken, getDashboardData);
 
 export default ownerRouter;

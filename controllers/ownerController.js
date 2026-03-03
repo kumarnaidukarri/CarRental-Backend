@@ -1,5 +1,6 @@
 import UserModel from "../models/User.js"; // db user model
 import CarModel from "../models/Car.js"; // db car model
+import BookingModel from "../models/Booking.js"; // db booking model
 
 import { toFile } from "@imagekit/nodejs"; // 'Imagekit SDK' official library
 import imagekitClient from "../configs/imageKit.js"; // 'Imagekit my module' to upload file to the 'ImageKit Cloud Server'.
@@ -139,10 +140,59 @@ const deleteCar = async (req, res) => {
   }
 };
 
+// controller function - API to "Get Dashboard Data"
+const getDashboardData = async (req, res) => {
+  try {
+    const { _id: userId, role } = req.user;
+
+    if (role !== "owner") {
+      return res.json({
+        success: false,
+        message: "Unauthorized. You are not an Owner",
+      });
+    }
+
+    const cars = await CarModel.find({ owner: userId });
+    const bookings = await BookingModel.find({ owner: userId })
+      .populate("car")
+      .sort({ createdAt: -1 });
+
+    const pendingBookings = await BookingModel.find({
+      owner: userId,
+      status: "pending",
+    });
+    const completedBookings = await BookingModel.find({
+      owner: userId,
+      status: "confirmed",
+    });
+
+    // Calculate monthly revenue from bookings where status is confirmed
+    const monthlyRevenue = bookings
+      .slice()
+      .filter((booking) => booking.status === "confirmed")
+      .reduce((acc, booking) => acc + booking.price, 0);
+
+    const dashboardData = {
+      totalCars: cars.length,
+      totalBookings: bookings.length,
+      pendingBookings: pendingBookings.length,
+      completedBookings: completedBookings,
+      recentBookings: bookings.slice(0, 3),
+      monthlyRevenue,
+    };
+
+    res.json({ success: true, dashboardData });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+
 export {
   changeRoleToOwner,
   addCar,
   getOwnerCars,
   toggleCarAvailability,
   deleteCar,
+  getDashboardData,
 };
