@@ -109,3 +109,22 @@ const getUserBookings = async (req, res) => {
     return res.json({ success: false, message: error.message });
   }
 };
+
+// controller function - API to Get 'Owner Bookings'
+const getOwnerBookings = async (req, res) => {
+  try {
+    if (req.user.role !== "owner") {
+      return res.json({ success: false, message: "Unauthorized" });
+    }
+
+    const bookings = await BookingModel.find({ owner: req.user._id })
+      .populate("car user")
+      .select("-user.password")
+      .sort({ createdAt: -1 }); // Find DB Query
+
+    res.json({ success: true, bookings });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, message: error.message });
+  }
+};
