@@ -58,3 +58,54 @@ const checkAvailabilityOfCar = async (req, res) => {
     return res.json({ success: false, message: error.message });
   }
 };
+
+// controller function - API to Create a Booking
+const createBooking = async (req, res) => {
+  try {
+    const { _id } = req.user;
+    const { car, pickupDate, returnDate } = req.body;
+
+    const isAvailable = await checkAvailability(car, pickupDate, returnDate);
+    if (!isAvailable) {
+      return res.json({ success: false, message: "Car is not available" });
+    }
+
+    const carData = await CarModel.findById(car);
+
+    // Calculate price based on pickup date and return date.
+    const picked = new Date(pickupDate);
+    const returned = new Date(returnDate);
+    const noOfDays = Math.ceil((returned - picked) / (1000 * 60 * 60 * 24));
+    const price = carData.pricePerDay * noOfDays;
+
+    const booking = await BookingModel.create({
+      car,
+      owner: carData.owner,
+      user: _id,
+      pickupDate,
+      returnDate,
+      price,
+    }); // Inserts new data into booking
+
+    res.json({ success: true, message: "Booking Created", booking });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+// controller function - API to List the 'User Bookings'
+const getUserBookings = async (req, res) => {
+  try {
+    const { _id } = req.user;
+
+    const bookings = await BookingModel.find({ user: _id })
+      .populate("car")
+      .sort({ createdAt: -1 });
+
+    res.json({ success: true, bookings });
+  } catch (error) {
+    console.log(error);
+    return res.json({ success: false, message: error.message });
+  }
+};
