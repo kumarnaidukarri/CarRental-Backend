@@ -188,6 +188,38 @@ const getDashboardData = async (req, res) => {
   }
 };
 
+// controller function - API to "Update the user image"
+const updateUserImage = async (req, res) => {
+  try {
+    const { _id } = req.user;
+
+    const imageFileInfo = req.file; // Access the Stored file information
+
+    // * 1) Upload Image into Imagekit Cloud Server
+    const fileObject = await toFile(
+      imageFileInfo.buffer,
+      imageFileInfo.originalname,
+    );
+    const uploadedImageResponse = await imagekitClient.files.upload({
+      file: fileObject,
+      fileName: imageFileInfo.originalname,
+      folder: "users",
+    });
+    console.log(
+      uploadedImageResponse,
+    ); /* {fileId:'69a2', name:'user1_uTdn.png', size:950862, filePath:'/users/user1...', url:'https://ik...', fileType:'image', height:853, width:1280} */
+
+    // * 2) Save the 'New Car' in Database.
+    const imageCdnUrl = uploadedImageResponse.url;
+
+    await UserModel.findByIdAndUpdate(_id, { image });
+    res.json({ success: true, message: "Image Updated Successfully" });
+  } catch (error) {
+    console.log(error.message);
+    res.json({ success: false, message: error.message });
+  }
+};
+
 export {
   changeRoleToOwner,
   addCar,
@@ -195,4 +227,5 @@ export {
   toggleCarAvailability,
   deleteCar,
   getDashboardData,
+  updateUserImage,
 };

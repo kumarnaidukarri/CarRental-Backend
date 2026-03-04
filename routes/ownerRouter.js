@@ -11,6 +11,7 @@ import {
   toggleCarAvailability,
   deleteCar,
   getDashboardData,
+  updateUserImage,
 } from "../controllers/ownerController.js"; // controller functions
 
 const ownerRouter = express.Router();
@@ -39,5 +40,12 @@ ownerRouter.post(
 ownerRouter.post("/delete-car", protectRoute_VerifyJwtToken, deleteCar);
 
 ownerRouter.get("/dashboard", protectRoute_VerifyJwtToken, getDashboardData);
+
+ownerRouter.post(
+  "/update-image",
+  protectRoute_VerifyJwtToken,
+  uploadMiddleware.single("image"),
+  updateUserImage,
+);
 
 export default ownerRouter;
