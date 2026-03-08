@@ -1,19 +1,19 @@
 
 tools :-
-    Node.js, Express.js, Mongodb, mongoose 
+    Node.js, Express.js, Mongodb, mongoose
     cors, dotenv, jsonwebtoken, bcrypt
     nodemon
 
-    "Multer": 
+    "Multer":
       a npm package used to handle 'file uploads'.
       it provides a middleware function that will handle 'upload files'.
-      it save inside "uploads" folder in 'Localdisk of our server' (or) 'Ram buffer memory'. 
-      later, we can send file to cloud server(imagekit, aws s3). 
+      it save inside "uploads" folder in 'Localdisk of our server' (or) 'Ram buffer memory'.
+      later, we can send file to cloud server(imagekit, aws s3).
 
-    "@Imagekit/Nodejs": 
-       SDK package used to upload your mentioned files to the "Imagekit Cloud Server".  
-       we can access them using CDNs. 
-        
+    "@Imagekit/Nodejs":
+       SDK package used to upload your mentioned files to the "Imagekit Cloud Server".
+       we can access them using CDNs.
+
 
 MVC Architecture:
 Model View Control
@@ -24,48 +24,48 @@ model db, server path, controller function
 1) User Router
    http://localhost:5000/api/user
    post:  http://localhost:5000/api/user/register
-          body: {"name":"Kumar", "email":"example@gmail.com", "password":"example@123"}  
+          body: {"name":"Kumar", "email":"example@gmail.com", "password":"example@123"}
    post:  /login
           body: {"email": "example@gmail.com", "password":"example@123"}
    get:   /userdata
-          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"} 
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}
 
 2) Owner Router
    http://localhost:5000/api/owner
-   post: "http://localhost:5000/api/owner/change-role" 
-          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}          
-   post:  /add-car 
-          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}   
+   post: "http://localhost:5000/api/owner/change-role"
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}
+   post:  /add-car
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}
           body form-data: {
-             carData : {'brand':'Audi','model':'A8','year':'2026'}, 
+             carData : {'brand':'Audi','model':'A8','year':'2026'},
              image : 'please upload a file'
           }
-   get:   /cars  
-          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"} 
+   get:   /cars
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}
    post:  /toggle-car-availability
-          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"} 
-          body: {carId:'41ef422'}      
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}
+          body: {carId:'41ef422'}
    post:  /delete-car
-          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"} 
-          body: {carId:'41ef422'}   
-   get:  /dashboard  
-   post: /update-image 
-          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}   
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}
+          body: {carId:'41ef422'}
+   get:  /dashboard
+   post: /update-image
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}
           body form-data: {
              image : 'please upload a updated user image file'
           }
-          
-                
 
 
-3) Booking Router 
+
+
+3) Booking Router
    http://localhost:5000/api/bookings
    post: "http://localhost:5000/api/bookings/check-availability"
-          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}          
+          header: {"authorization":"eyJhbGciOiJIUzI1NiJ9.Njk5ZmRiY2VhMW JwtToken"}
           body: {location:'', pickupDate:'', returnDate:''}
    post: bookings/create
          body:{car:'', pickupDate:'', returnDate:''}
-   get : bookings/user 
-   get : bookings/owner 
+   get : bookings/user
+   get : bookings/owner
    post: bookings/change-status
-         body:{bookingId:'', status:''}   
+         body:{bookingId:'', status:''}

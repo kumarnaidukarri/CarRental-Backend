@@ -9,23 +9,23 @@ const checkAvailability = async (car, startDate, endDate) => {
     pickupDate: { $lte: endDate },
   }); // checks 'car is available between two dates.'
   /*
-    1 -> 5,  
-    10 -> 15, 
+    1 -> 5,
+    10 -> 15,
     20 -> 25
     new booking: 6 -> 9
     start > old return
     end   < old pickup
    */
 
-  /* ex: 
-      i) OldBooking: (1 - 5),   NewBooking: (10 - 14).     so, (1,2,3,4,5)  (10,11,12,13,14)  
-         they don't overlap. so, booking allowed 
+  /* ex:
+      i) OldBooking: (1 - 5),   NewBooking: (10 - 14).     so, (1,2,3,4,5)  (10,11,12,13,14)
+         they don't overlap. so, booking allowed
       ii) OldBooking: (2 - 8),   NewBooking: (6 - 12)      so, (2,3,4,5,6,7,8)  (6,7,8,9,10,11,12)
-         they overlapping.   so, booking is not allowed. 
-      
+         they overlapping.   so, booking is not allowed.
+
       conditions:
       newbooking start  >  previous return date
-      new booking end   <  previous pickup date  
+      new booking end   <  previous pickup date
   */
 
   return bookings.length === 0;

@@ -16,7 +16,7 @@ connectDB();
 app.use(cors());
 app.use(
   express.json(),
-); /* Middleware tells Express to automatically 'Parse Incoming JSON Request Bodies' and convert into 'Javascript Object'. then, stores it in req.body. 
+); /* Middleware tells Express to automatically 'Parse Incoming JSON Request Bodies' and convert into 'Javascript Object'. then, stores it in req.body.
 i.e, request body -> middleware convert 'JSON' into 'Javascript Object'. */
 
 // Routes

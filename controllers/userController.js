@@ -1,4 +1,4 @@
-/* 'controllers folder' contains different files. 
+/* 'controllers folder' contains different files.
     these files contain 'functions' that handle 'client requests' and execute business logic for different routes.
     when a route is called by Client, the corresponding controller function gets executed based on the 'client request path'.
     i.e, Client -> Route -> Controller Function -> Database -> Response

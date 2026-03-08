@@ -5,7 +5,7 @@
 import jwt from "jsonwebtoken";
 import UserModel from "../models/User.js"; // db user model
 
-/* Middleware check for 'JWT token' in 'Request Header'. 
+/* Middleware check for 'JWT token' in 'Request Header'.
    it decodes the 'User Data' from the Token. then, adds 'user data' into the 'Request Object'.
    calls the next middleware.
 */

@@ -27,13 +27,13 @@ const addCar = async (req, res) => {
     // Store the upload file in LocalDisk of server (or) RAM Buffer Memory.
     // Multer middleware intercepts request, Stores the file in Local disk (or) RAM buffer memory, adds the file information to "req.file" object.  then, automatically calls next() controller function.
     /* local disk memory - {fieldName:'image', originalName:'car_1.png', destination:'uploads/', fileName:'car_1.png', path:'uploads/car_1.png', 'size':520897}
-       ram buffer memory - {fieldname:'image',originalname: 'car_3.png', buffer:<Buffer 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 0>, size:192897} 
+       ram buffer memory - {fieldname:'image',originalname: 'car_3.png', buffer:<Buffer 89 50 4e 47 0d 0a 1a 0a 00 00 00 0d 49 48 44 52 00 00 0>, size:192897}
     */
     const imageFileInfo = req.file; // Access the Stored file information
     // console.log("FILE:", imageFileInfo);
 
     // * 1) Send Upload the Image file from BackendServer into "ImageKit.io" Cloud Server
-    /* Convert 'Buffer' into proper 'File Object'.   
+    /* Convert 'Buffer' into proper 'File Object'.
        then parameters,  file:"uploading_file_object", fileName:"uploading_file_name", folder:"optional folder_name in Imagekit cloudserver"  */
     const fileObject = await toFile(
       imageFileInfo.buffer,
@@ -121,8 +121,8 @@ const deleteCar = async (req, res) => {
     }
 
     // Update it in Database
-    /* Don't Delete the Car Document. 
-       because, Someone may already booked this car and showed in UI.  * Deleting it - breaksUI, reports break, past history breaks. 
+    /* Don't Delete the Car Document.
+       because, Someone may already booked this car and showed in UI.  * Deleting it - breaksUI, reports break, past history breaks.
        so, keep the car record, mark it as inactive, prevent new bookings.
     */
     car.owner = null;
